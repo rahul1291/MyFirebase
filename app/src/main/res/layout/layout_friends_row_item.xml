@@ -15,15 +15,6 @@
         app:civ_border_width="1dp" />
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/txtStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="@string/status"
-        android:textColor="@color/colorAccent" />
-
-    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/txtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

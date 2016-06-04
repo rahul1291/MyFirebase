@@ -226,7 +226,9 @@ public class AddFriends extends AppCompatActivity {
 
                     } else {
                         UsersChatModel usersChatModel = dataSnapshot.getValue(UsersChatModel.class);
-                        searchAdapter.SetFirstLastName(usersChatModel.getFirstName(), usersChatModel.getLastName());
+                        System.out.println("created at"+usersChatModel.getCreatedAt());
+                        System.out.println("email"+usersChatModel.getUserEmail());
+                        searchAdapter.SetFirstLastName(usersChatModel.getFirstName(), usersChatModel.getLastName(),usersChatModel.getCreatedAt(),usersChatModel.getUserEmail());
                     }
                 }
                 System.out.println("inside size"+usersChatModels.size());

@@ -33,6 +33,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     static Context context;
     String firstnamee;
     String lastnamee;
+    String createdAt;
+    String email;
 
     public SearchAdapter(List<UsersChatModel> usersChatModels) {
         this.usersChatModels = usersChatModels;
@@ -50,9 +52,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.txtName.setText(usersChatModels.get(position).getFirstName() + "  " + usersChatModels.get(position).getLastName());
     }
 
-    public void SetFirstLastName(String firstname, String lastname) {
+    public void SetFirstLastName(String firstname, String lastname,String createdAt,String email) {
         firstnamee = firstname;
         lastnamee = lastname;
+        this.createdAt=createdAt;
+        this.email=email;
     }
 
     @Override
@@ -98,8 +102,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             map.put(ReferenceUrl.STATUS, "pending");
             map.put(ReferenceUrl.KEY_FIRST_NAME, firstnamee);
             map.put(ReferenceUrl.KEY_LAST_NAME, lastnamee);
+            map.put(ReferenceUrl.KEY_TIMESTAMP,createdAt);
+            map.put(ReferenceUrl.KEY_EMAIL,email);
+            map.put(ReferenceUrl.RECIPIENT_CREATED_TIME,usersChatModels.get(position).getCreatedAt());
             map.put(ReferenceUrl.RECIPIENT_FIRST_NAME, usersChatModels.get(position).getFirstName());
             map.put(ReferenceUrl.RECIPIENT_LAST_NAME, usersChatModels.get(position).getLastName());
+            map.put(ReferenceUrl.RECIPIENT_EMAIL,usersChatModels.get(position).getUserEmail());
             MyProgressDialog.ShowDialog(context);
             firebaseRootRef.child(ReferenceUrl.CHILD_FRIENDS).push().setValue(map, new Firebase.CompletionListener() {
                 @Override

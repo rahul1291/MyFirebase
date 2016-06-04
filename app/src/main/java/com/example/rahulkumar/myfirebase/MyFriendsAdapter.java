@@ -1,5 +1,7 @@
 package com.example.rahulkumar.myfirebase;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -19,9 +21,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MyFriendsAdapter extends RecyclerView.Adapter<MyFriendsAdapter.ViewHolder> {
 
 
-    List<FriendsRequestsModel> friendsRequestsModelList;
+    static List<FriendsRequestsModel> friendsRequestsModelList;
     SharedPreferences prefs;
     String id;
+
+    static Context context;
 
     public MyFriendsAdapter(List<FriendsRequestsModel> friendsRequestsModelList) {
         this.friendsRequestsModelList = friendsRequestsModelList;
@@ -29,6 +33,7 @@ public class MyFriendsAdapter extends RecyclerView.Adapter<MyFriendsAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
         prefs = parent.getContext().getSharedPreferences("MyApp", 0);
         id = prefs.getString("id", "");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_friends_row_item, parent, false);
@@ -46,7 +51,6 @@ public class MyFriendsAdapter extends RecyclerView.Adapter<MyFriendsAdapter.View
             holder.txtName.setText(friendsRequestsModelList.get(position).getFirstName() + " " + friendsRequestsModelList.get(position).getLastName());
         }
 
-        holder.txtStatus.setText("Offline");
     }
 
     public void Notify(List<FriendsRequestsModel> friendsRequestsModelList) {
@@ -59,7 +63,7 @@ public class MyFriendsAdapter extends RecyclerView.Adapter<MyFriendsAdapter.View
         return friendsRequestsModelList.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @Bind(R.id.iv_image)
         CircleImageView imageView;
@@ -67,12 +71,23 @@ public class MyFriendsAdapter extends RecyclerView.Adapter<MyFriendsAdapter.View
         @Bind(R.id.txtName)
         AppCompatTextView txtName;
 
-        @Bind(R.id.txtStatus)
-        AppCompatTextView txtStatus;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getLayoutPosition(); // Get row position
+
+            FriendsRequestsModel user = friendsRequestsModelList.get(position); // Get use object
+            // Create a chat activity
+            Intent chatIntent = new Intent(context, ChatActivity.class);
+            // Attach data to activity as a parcelable object
+            chatIntent.putExtra(ReferenceUrl.KEY_PASS_USERS_INFO, user);
+            context.startActivity(chatIntent);
         }
     }
 }

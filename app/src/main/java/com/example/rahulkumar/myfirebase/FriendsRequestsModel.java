@@ -28,6 +28,43 @@ public class FriendsRequestsModel implements Parcelable {
     private String key;
     private String rfirstName;
     private String rlastName;
+    private String createdAt;
+    private String email;
+    private String remail;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRemail() {
+        return remail;
+    }
+
+    public void setRemail(String remail) {
+        this.remail = remail;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getRcreatedTime() {
+        return RcreatedTime;
+    }
+
+    public void setRcreatedTime(String rcreatedTime) {
+        RcreatedTime = rcreatedTime;
+    }
+
+    private String RcreatedTime;
 
     public FriendsRequestsModel() {
 
@@ -123,5 +160,38 @@ public class FriendsRequestsModel implements Parcelable {
         dest.writeString(key);
         dest.writeString(rfirstName);
         dest.writeString(rlastName);
+    }
+
+    /*create chat endpoint for firebase*/
+    public String getChatRef(){
+        return createUniqueChatRef();
+    }
+
+
+
+    private String createUniqueChatRef(){
+        String uniqueChatRef="";
+        if(createdAtCurrentUser()>createdAtRecipient()){
+            uniqueChatRef=cleanEmailAddress(getEmail())+"-"+cleanEmailAddress(getRemail());
+        }else {
+
+            uniqueChatRef=cleanEmailAddress(getRemail())+"-"+cleanEmailAddress(getEmail());
+        }
+        return uniqueChatRef;
+    }
+
+    private long createdAtCurrentUser(){
+        return Long.parseLong(getCreatedAt());
+    }
+
+    private long createdAtRecipient(){
+        return Long.parseLong(getRcreatedTime());
+    }
+
+    private String cleanEmailAddress(String email){
+
+        //replace dot with comma since firebase does not allow dot
+        return email.replace(".","-");
+
     }
 }

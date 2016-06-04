@@ -47,4 +47,6 @@ public class ReferenceUrl {
     public static final String STATUS = "status";
     public static final String RECIPIENT_FIRST_NAME = "rfirstName";
     public static final String RECIPIENT_LAST_NAME = "rlastName";
+    public static final String RECIPIENT_CREATED_TIME = "rcreatedTime";
+    public static final String RECIPIENT_EMAIL = "remail";
 }

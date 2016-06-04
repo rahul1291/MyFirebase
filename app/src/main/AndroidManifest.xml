@@ -33,7 +33,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".FriendRequests"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".ChatActivity"></activity>
     </application>
 
 </manifest>
