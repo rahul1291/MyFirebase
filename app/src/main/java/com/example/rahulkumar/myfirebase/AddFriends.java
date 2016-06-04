@@ -230,6 +230,7 @@ public class AddFriends extends AppCompatActivity {
                     }
                 }
                 System.out.println("inside size");
+                System.out.println("inside size"+usersChatModels.size());
             }
 
             @Override
