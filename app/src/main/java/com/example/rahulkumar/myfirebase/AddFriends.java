@@ -229,7 +229,6 @@ public class AddFriends extends AppCompatActivity {
                         searchAdapter.SetFirstLastName(usersChatModel.getFirstName(), usersChatModel.getLastName());
                     }
                 }
-                System.out.println("inside size");
                 System.out.println("inside size"+usersChatModels.size());
             }
 
