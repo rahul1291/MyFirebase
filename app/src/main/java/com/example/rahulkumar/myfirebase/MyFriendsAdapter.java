@@ -1,0 +1,78 @@
+package com.example.rahulkumar.myfirebase;
+
+import android.content.SharedPreferences;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+/**
+ * Created by rahulkumar on 21/05/16.
+ */
+public class MyFriendsAdapter extends RecyclerView.Adapter<MyFriendsAdapter.ViewHolder> {
+
+
+    List<FriendsRequestsModel> friendsRequestsModelList;
+    SharedPreferences prefs;
+    String id;
+
+    public MyFriendsAdapter(List<FriendsRequestsModel> friendsRequestsModelList) {
+        this.friendsRequestsModelList = friendsRequestsModelList;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        prefs = parent.getContext().getSharedPreferences("MyApp", 0);
+        id = prefs.getString("id", "");
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_friends_row_item, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+
+        if (id.equalsIgnoreCase(friendsRequestsModelList.get(position).getOwnerid())) {
+            holder.txtName.setText(friendsRequestsModelList.get(position).getRfirstName() + " " + friendsRequestsModelList.get(position).getRlastName());
+        }
+
+        if (id.equalsIgnoreCase(friendsRequestsModelList.get(position).getRecipientid())) {
+            holder.txtName.setText(friendsRequestsModelList.get(position).getFirstName() + " " + friendsRequestsModelList.get(position).getLastName());
+        }
+
+        holder.txtStatus.setText("Offline");
+    }
+
+    public void Notify(List<FriendsRequestsModel> friendsRequestsModelList) {
+        this.friendsRequestsModelList = friendsRequestsModelList;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemCount() {
+        return friendsRequestsModelList.size();
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        @Bind(R.id.iv_image)
+        CircleImageView imageView;
+
+        @Bind(R.id.txtName)
+        AppCompatTextView txtName;
+
+        @Bind(R.id.txtStatus)
+        AppCompatTextView txtStatus;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+}
