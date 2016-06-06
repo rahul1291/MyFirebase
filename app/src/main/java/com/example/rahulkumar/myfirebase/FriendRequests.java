@@ -73,6 +73,7 @@ public class FriendRequests extends AppCompatActivity {
                 MyProgressDialog.Dismiss();
                 if (dataSnapshot.exists()) {
                     FriendsRequestsModel model = dataSnapshot.getValue(FriendsRequestsModel.class);
+
                     String ownerid = model.getOwnerid();
                     if (!id.equalsIgnoreCase(ownerid) && id.equalsIgnoreCase(model.getRecipientid()) && model.getStatus().equalsIgnoreCase("pending")) {
                         model.setKey(dataSnapshot.getKey());

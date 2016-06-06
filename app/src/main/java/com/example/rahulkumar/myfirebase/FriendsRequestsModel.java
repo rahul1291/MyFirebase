@@ -61,7 +61,7 @@ public class FriendsRequestsModel implements Parcelable {
     }
 
     public void setRcreatedTime(String rcreatedTime) {
-        RcreatedTime = rcreatedTime;
+        this.RcreatedTime = rcreatedTime;
     }
 
     private String RcreatedTime;
@@ -79,6 +79,10 @@ public class FriendsRequestsModel implements Parcelable {
         key = parcel.readString();
         rfirstName = parcel.readString();
         rlastName = parcel.readString();
+        createdAt=parcel.readString();
+        RcreatedTime=parcel.readString();
+        email=parcel.readString();
+        remail=parcel.readString();
     }
 
     public String getRecipientid() {
@@ -160,6 +164,10 @@ public class FriendsRequestsModel implements Parcelable {
         dest.writeString(key);
         dest.writeString(rfirstName);
         dest.writeString(rlastName);
+        dest.writeString(createdAt);
+        dest.writeString(RcreatedTime);
+        dest.writeString(email);
+        dest.writeString(remail);
     }
 
     /*create chat endpoint for firebase*/

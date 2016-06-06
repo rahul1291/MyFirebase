@@ -83,6 +83,8 @@ public class MyFriendsAdapter extends RecyclerView.Adapter<MyFriendsAdapter.View
             int position = getLayoutPosition(); // Get row position
 
             FriendsRequestsModel user = friendsRequestsModelList.get(position); // Get use object
+            System.out.println("created at"+user.getCreatedAt());
+            System.out.println("rcreated at"+user.getRcreatedTime());
             // Create a chat activity
             Intent chatIntent = new Intent(context, ChatActivity.class);
             // Attach data to activity as a parcelable object

@@ -69,12 +69,17 @@ public class ChatActivity extends AppCompatActivity {
         mCurrentUid=pref.getString("id","");
         Intent userdata=getIntent();
         FriendsRequestsModel friendsRequestsModel=userdata.getParcelableExtra(ReferenceUrl.KEY_PASS_USERS_INFO);
+        System.out.println("value"+friendsRequestsModel.getOwnerid());
         if(friendsRequestsModel.getOwnerid().equalsIgnoreCase(mCurrentUid)){
             mRecipientUid=friendsRequestsModel.getRecipientid();
         }
         if(friendsRequestsModel.getRecipientid().equalsIgnoreCase(mCurrentUid)){
             mRecipientUid=friendsRequestsModel.getOwnerid();
         }
+
+
+
+
         chat_recycler_view.setLayoutManager(new LinearLayoutManager(this));
         chat_recycler_view.setHasFixedSize(true);
 
