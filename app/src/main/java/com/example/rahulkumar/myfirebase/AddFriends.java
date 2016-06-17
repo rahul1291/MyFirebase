@@ -175,7 +175,6 @@ public class AddFriends extends AppCompatActivity {
     private void FindUsers() {
         ShowProgressBarForUsers();
         usersChatModels.clear();
-        final List<UsersChatModel> list = new ArrayList<>();
         mListenerUsers = fireBaseUsers.limitToFirst(50).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -185,28 +184,27 @@ public class AddFriends extends AppCompatActivity {
                     String userUid = dataSnapshot.getKey();
                     if (!userUid.equals(mCurrentUserId)) {
                         UsersChatModel usersChatModel = dataSnapshot.getValue(UsersChatModel.class);
-                        System.out.println("count is" + dataSnapshot.getChildrenCount());
-                        System.out.println("email" + usersChatModel.getUserEmail());
 
                         if (usersChatModel.getUserEmail() != null) {
                             usersChatModel.setRecipientUid(dataSnapshot.getKey());
-                            System.out.println("id is" + usersChatModel.getRecipientUid());
-                            System.out.println("friendlist size" + friendsRequestsModels.size());
                             if (friendsRequestsModels.size() > 0) {
-                                //list.add(usersChatModel);
-                                List<String> ownerid = new ArrayList<String>();
-                                List<String> rec_id = new ArrayList<String>();
+                                List<String> owner_recid = new ArrayList<String>();
+                                List<String> recid_owner = new ArrayList<String>();
                                 for (FriendsRequestsModel model : friendsRequestsModels) {
-                                    ownerid.add(model.getOwnerid());
-                                    rec_id.add(model.getRecipientid());
+                                    owner_recid.add(model.getOwnerid() + "|" + model.getRecipientid());
+                                    recid_owner.add(model.getRecipientid() + "|" + model.getOwnerid());
                                 }
-                                if (ownerid.contains(usersChatModel.getRecipientUid()) || rec_id.contains(usersChatModel.getRecipientUid()) || ownerid.contains(userUid) || rec_id.contains(userUid)) {
+                                if (owner_recid.contains(mCurrentUserId + "|" + usersChatModel.getRecipientUid()) || owner_recid.contains(usersChatModel.getRecipientUid() + "|" + mCurrentUserId)) {
+
+                                } else if (recid_owner.contains(mCurrentUserId + "|" + usersChatModel.getRecipientUid()) || recid_owner.contains(usersChatModel.getRecipientUid() + "|" + mCurrentUserId)) {
 
                                 } else {
                                     usersChatModels.add(usersChatModel);
                                     Set<UsersChatModel> set = new HashSet<UsersChatModel>(usersChatModels);
                                     usersChatModels = new ArrayList<UsersChatModel>(set);
                                 }
+
+
                             } else {
                                 usersChatModels.add(usersChatModel);
                                 Set<UsersChatModel> set = new HashSet<UsersChatModel>(usersChatModels);
@@ -226,12 +224,12 @@ public class AddFriends extends AppCompatActivity {
 
                     } else {
                         UsersChatModel usersChatModel = dataSnapshot.getValue(UsersChatModel.class);
-                        System.out.println("created at"+usersChatModel.getCreatedAt());
-                        System.out.println("email"+usersChatModel.getUserEmail());
-                        searchAdapter.SetFirstLastName(usersChatModel.getFirstName(), usersChatModel.getLastName(),usersChatModel.getCreatedAt(),usersChatModel.getUserEmail());
+                        System.out.println("created at" + usersChatModel.getCreatedAt());
+                        System.out.println("email" + usersChatModel.getUserEmail());
+                        searchAdapter.SetFirstLastName(usersChatModel.getFirstName(), usersChatModel.getLastName(), usersChatModel.getCreatedAt(), usersChatModel.getUserEmail());
                     }
                 }
-                System.out.println("inside size"+usersChatModels.size());
+                System.out.println("inside size" + usersChatModels.size());
                 System.out.println("advdvdcvdcvdvcdvcdvcjdv");
                 System.out.println("cvgsdvcjhdsbjhdsbhjdschj");
             }
